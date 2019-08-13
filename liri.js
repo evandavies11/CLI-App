@@ -55,3 +55,12 @@ axios.get(movieQueryUrl).then(
         console.log(error.config);
     });
 //}
+
+function getSpotify(songName) {
+    var spotify = new Spotify(keys.spotify);
+
+    if (!songName) {
+        songName = "The Sign";
+    };
+    console.log(songName)
+}
