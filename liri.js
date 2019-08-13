@@ -90,9 +90,9 @@ function getSpotify(songName) {
         }
 
         console.log("===================================");
-        console.log("Artist Name:" + data.tracks.items[0].album.artists[0].name);
-        console.log("Song Name" + data.track.items[0].name);
-        console.log("Album" + data.track.items[0].album.name);
+        console.log("Artist Name: " + data.tracks.items[0].album.artists[0].name + "\r\n");
+        console.log("Song Name: " + data.tracks.items[0].name + "\r\n");
+        console.log("Album: " + data.tracks.items[0].album.name + "\r\n");
 
         var logSong = " ==Spotify==" + data.track.items[0].album.artists[0].name;
 
@@ -111,8 +111,8 @@ function getBandsInTown(artist) {
         function (response) {
 
             console.log("===================================");
-            console.log("Venue: " + response.data[0].venue.name);
-            console.log("Location: " + response.data[0].venue.city);
+            console.log("Venue: " + response.data[0].venue.name + "\r\n");
+            console.log("Location: " + response.data[0].venue.city + "\r\n");
             console.log("Date: " + moment(response.data[0].datetime).format("MM-DD-YYYY"));
 
             var logConcert = " ==BandsinTown== " + artist + venue;
