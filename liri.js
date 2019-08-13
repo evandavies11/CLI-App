@@ -6,61 +6,75 @@ var axios = require("axios");
 var fs = require("fs");
 var moment = require("moment");
 
-//var useApp = process.argv[2];
+var useApp = process.argv[2];
 
-//var useSearch = process.argv.slice(3).join(" ");
+var userSearch = process.argv.slice(3).join(" ");
 
-//function getOMBD(movie) {
+function liriRun(useApp, userSearch) {
+    switch (useApp) {
+        case "movie-this":
+            getOMBD(userSearch);
+            break;
+        case "concert-this":
+            getBandsInTown(userSearch);
+            break;
+        case "spotify-this-song":
+            getSpotify(userSearch);
+    }
+};
 
-// if (!movie) {
-//  movie = "Mr.Nobody";
-//};
+function getOMBD(movie) {
 
-var movieName = process.argv[2];
+    if (!movie) {
+        movie = "Mr.Nobody";
+    };
 
-var movieQueryUrl = "http://www.omdbapi.com/?t=" + movieName + "&y=&plot=short&apikey=trilogy";
+    //how it works before switch case
+    //var movieName = process.argv[2];
 
-// This line is just to help us debug against the actual URL.
-console.log(movieQueryUrl);
+    var movieQueryUrl = "http://www.omdbapi.com/?t=" + movie + "&y=&plot=short&apikey=trilogy";
 
-//function GetOMDB(movie) {
+    // This line is just to help us debug against the actual URL.
+    console.log(movieQueryUrl);
 
-axios.get(movieQueryUrl).then(
-    function (response) {
-        console.log("===================================");
-        console.log("Title: " + response.data.Title);
-        console.log("Release Year: " + response.data.Year);
-        console.log("IMDB Rating: " + response.data.imdbRating);
-        //console.log("RT Rating: " + response.data.rating[1].Value);
-        console.log("Country Made: " + response.data.Country);
-        console.log("Language: " + response.data.Language);
-        console.log("Plot: " + response.data.Plot);
-        console.log("Actors " + response.data.Actors);
+    //function GetOMDB(movie) {
+
+    axios.get(movieQueryUrl).then(
+        function (response) {
+            console.log("===================================");
+            console.log("Title: " + response.data.Title);
+            console.log("Release Year: " + response.data.Year);
+            console.log("IMDB Rating: " + response.data.imdbRating);
+            //console.log("RT Rating: " + response.data.rating[1].Value);
+            console.log("Country Made: " + response.data.Country);
+            console.log("Language: " + response.data.Language);
+            console.log("Plot: " + response.data.Plot);
+            console.log("Actors " + response.data.Actors);
 
 
 
-    })
-    .catch(function (error) {
-        if (error.response) {
-            // The request was made and the server responded with a status code
-            // that falls out of the range of 2xx
-            console.log("---------------Data---------------");
-            console.log(error.response.data);
-            console.log("---------------Status---------------");
-            console.log(error.response.status);
-            console.log("---------------Status---------------");
-            console.log(error.response.headers);
-        } else if (error.request) {
-            // The request was made but no response was received
-            // `error.request` is an object that comes back with details pertaining to the error that occurred.
-            console.log(error.request);
-        } else {
-            // Something happened in setting up the request that triggered an Error
-            console.log("Error", error.message);
-        }
-        console.log(error.config);
-    });
-//}
+        })
+        .catch(function (error) {
+            if (error.response) {
+                // The request was made and the server responded with a status code
+                // that falls out of the range of 2xx
+                console.log("---------------Data---------------");
+                console.log(error.response.data);
+                console.log("---------------Status---------------");
+                console.log(error.response.status);
+                console.log("---------------Status---------------");
+                console.log(error.response.headers);
+            } else if (error.request) {
+                // The request was made but no response was received
+                // `error.request` is an object that comes back with details pertaining to the error that occurred.
+                console.log(error.request);
+            } else {
+                // Something happened in setting up the request that triggered an Error
+                console.log("Error", error.message);
+            }
+            console.log(error.config);
+        });
+};
 
 function getSpotify(songName) {
     var spotify = new Spotify(keys.spotify);
@@ -77,7 +91,7 @@ function getSpotify(songName) {
 
         console.log("===================================");
         console.log("Artist Name:" + data.tracks.items[0].album.artists[0].name);
-        console.log("Song Name" + data.track.imes[0].name);
+        console.log("Song Name" + data.track.items[0].name);
         console.log("Album" + data.track.items[0].album.name);
 
         var logSong = " ==Spotify==" + data.track.items[0].album.artists[0].name;
@@ -109,3 +123,5 @@ function getBandsInTown(artist) {
         }
     )
 };
+
+liriRun(useApp, userSearch);
