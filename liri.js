@@ -62,5 +62,22 @@ function getSpotify(songName) {
     if (!songName) {
         songName = "The Sign";
     };
-    console.log(songName)
-}
+    //console.log(songName)
+
+    spotify.search({ type: "track", query: songName }, function (err, data) {
+        if (err) {
+            return console.log("error" + err);
+        }
+
+        console.log("===================================");
+        console.log("Artist Name:" + data.tracks.items[0].album.artists[0].name);
+        console.log("Song Name" + data.track.imes[0].name);
+        console.log("Album" + data.track.items[0].album.name);
+
+        var logSong = " ==Spotify==" + data.track.items[0].album.artists[0].name;
+
+        fs.appendFile("log.txt", logSong, function (err) {
+            if (err) throw err;
+        });
+    })
+};
