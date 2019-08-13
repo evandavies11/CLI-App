@@ -10,6 +10,12 @@ var moment = require("moment");
 
 //var useSearch = process.argv.slice(3).join(" ");
 
+//function getOMBD(movie) {
+
+// if (!movie) {
+//  movie = "Mr.Nobody";
+//};
+
 var movieName = process.argv[2];
 
 var movieQueryUrl = "http://www.omdbapi.com/?t=" + movieName + "&y=&plot=short&apikey=trilogy";
@@ -80,4 +86,26 @@ function getSpotify(songName) {
             if (err) throw err;
         });
     })
+};
+
+function getBandsInTown(artist) {
+
+    var artist = userSearch;
+    var bandQueryURL = "https://rest.bandsintown.com/artists/" + artist + "/events?app_id=codingbootcamp";
+
+    axios.get(bandQueryURL).then(
+        function (response) {
+
+            console.log("===================================");
+            console.log("Venue: " + response.data[0].venue.name);
+            console.log("Location: " + response.data[0].venue.city);
+            console.log("Date: " + moment(response.data[0].datetime).format("MM-DD-YYYY"));
+
+            var logConcert = " ==BandsinTown== " + artist + venue;
+
+            fs.appendFile("log.txt", logConcert, function (err) {
+                if (err) throw err;
+            });
+        }
+    )
 };
